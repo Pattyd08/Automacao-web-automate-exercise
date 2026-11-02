@@ -38,6 +38,14 @@ jobs:
           path: cypress/screenshots
           if-no-files-found: ignore
 
+      - name: Salvar relatório Mochawesome
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mochawesome-report
+          path: cypress/reports
+          if-no-files-found: ignore
+
       - name: Salvar vídeos de execução
         uses: actions/upload-artifact@v4
         if: always()

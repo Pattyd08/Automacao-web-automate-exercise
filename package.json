@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test:modules": "cypress run --spec cypress/e2e/automation-exercise-modules.cy.js"
+    "test:modules": "cypress run --spec cypress/e2e/automation-exercise-modules.cy.js",
+    "test:report": "cypress run --spec cypress/e2e/automation-exercise-modules.cy.js"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +14,8 @@
     "cypress": "^13.7.3",
     "cypress-xpath": "^2.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "cypress-mochawesome-reporter": "^5.0.0"
+  },
   "description": ""
 }
