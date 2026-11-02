@@ -151,7 +151,7 @@ describe('Automation Exercise Test Suite', () => {
         preencherLogin(emailUsuario, senhaUsuario);
         verificarSeLoginFoiEfetuadoComSucesso(nomeUsuario);
         adicionarProdutoAoCarrinhoEAcessar();
-       
+
         //Clique em "Finalizar Compra"
         cy.contains('Proceed To Checkout').click();
 
@@ -271,44 +271,43 @@ describe('Automation Exercise Test Suite', () => {
             .and('contain.text', 'Email Address already exist!')
     }
 
-    function realizarPagamentoEConfirmarPedido(dadosCartao = {}) {
-    const dadosPadrao = {
-        nome: 'PGATS AUT',
-        numero: '4111111111111111',
-        cvc: '311',
-        mesValidade: '12',
-        anoValidade: '2028'
-    };
-
     function adicionarProdutoAoCarrinhoEAcessar() {
-    // Adiciona o primeiro produto da lista ao carrinho
-    cy.get('.features_items .col-sm-4').first().within(() => {
-        cy.contains('Add to cart').click();
-    });
+        // Adiciona o primeiro produto da lista ao carrinho
+        cy.get('.features_items .col-sm-4').first().within(() => {
+            cy.contains('Add to cart').click();
+        });
 
-    // Clica no link do Carrinho exibido no modal de confirmação
-    cy.get('.modal-content').should('be.visible');
-    cy.get('.modal-content a[href="/view_cart"]').click();
+        // Clica no link do Carrinho exibido no modal de confirmação
+        cy.get('.modal-content').should('be.visible');
+        cy.get('.modal-content a[href="/view_cart"]').click();
 
-    // Valida se a página do carrinho foi carregada corretamente
-    cy.url().should('include', '/view_cart');
-    cy.get('#cart_info').should('be.visible');
-}
+        // Valida se a página do carrinho foi carregada corretamente
+        cy.url().should('include', '/view_cart');
+        cy.get('#cart_info').should('be.visible');
+    }
 
-    const cartao = { ...dadosPadrao, ...dadosCartao };
+    function realizarPagamentoEConfirmarPedido(dadosCartao = {}) {
+        const dadosPadrao = {
+            nome: 'PGATS AUT',
+            numero: '4111111111111111',
+            cvc: '311',
+            mesValidade: '12',
+            anoValidade: '2028'
+        };
 
-    // 14. Insira os dados de pagamento
-    cy.get('[data-qa="name-on-card"]').type(cartao.nome);
-    cy.get('[data-qa="card-number"]').type(cartao.numero);
-    cy.get('[data-qa="cvc"]').type(cartao.cvc);
-    cy.get('[data-qa="expiry-month"]').type(cartao.mesValidade);
-    cy.get('[data-qa="expiry-year"]').type(cartao.anoValidade);
+        const cartao = { ...dadosPadrao, ...dadosCartao };
 
-    // 15. Clique no botão "Pagar e Confirmar Pedido"
-    cy.get('[data-qa="pay-button"]').click();
+        // Insira os dados de pagamento
+        cy.get('[data-qa="name-on-card"]').type(cartao.nome);
+        cy.get('[data-qa="card-number"]').type(cartao.numero);
+        cy.get('[data-qa="cvc"]').type(cartao.cvc);
+        cy.get('[data-qa="expiry-month"]').type(cartao.mesValidade);
+        cy.get('[data-qa="expiry-year"]').type(cartao.anoValidade);
 
-    // 16. Verifique a mensagem de sucesso
-    cy.contains('Your order has been placed successfully!').should('be.visible');
-}
+        // Clique no botão "Pagar e Confirmar Pedido"
+        cy.get('[data-qa="pay-button"]').click();
 
+        // Verifique a mensagem de sucesso
+        cy.contains('Congratulations! Your order has been confirmed!').should('be.visible');
+    }
 });
